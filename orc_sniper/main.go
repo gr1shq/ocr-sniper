@@ -13,10 +13,6 @@ import (
 )
 
 func main() {
-	fmt.Println("✅ OCR Sniper Ready!")
-	fmt.Println("📸 Select an area with your mouse...")
-	fmt.Println()
-
 	tempPath := "/tmp/ocr_capture.png"
 	var err error
 
@@ -29,37 +25,35 @@ func main() {
 	} else if osType == "windows" {
 		err = captureWindows(tempPath)
 	} else {
-		fmt.Println("❌ Unsupported OS:", osType)
+		fmt.Println(" Unsupported OS:", osType)
 		return
 	}
 
 	if err != nil {
-		fmt.Println("❌ Screenshot failed:", err)
+		fmt.Println(" Screenshot failed:", err)
 		return
 	}
 
 	fmt.Println("✅ Screenshot captured!")
 
-	// Check if Tesseract is installed
 	_, err = exec.LookPath("tesseract")
 	if err != nil {
-		fmt.Println("❌ Tesseract not found!")
-		fmt.Println("💡 Install: sudo apt install tesseract-ocr")
+		fmt.Println(" Tesseract not found!")
+		fmt.Println(" Install: sudo apt install tesseract-ocr")
 		return
 	}
 
-	// Run OCR using tesseract command line
 	cmd := exec.Command("tesseract", tempPath, "stdout", "-l", "eng")
 	output, err := cmd.Output()
 	if err != nil {
-		fmt.Println("❌ OCR failed:", err)
+		fmt.Println(" OCR failed:", err)
 		return
 	}
 
 	text := strings.TrimSpace(string(output))
 
 	fmt.Println()
-	fmt.Println("📝 OCR Result:")
+	fmt.Println("📝OCR Result:")
 	fmt.Println("━━━━━━━━━━━━━━")
 	fmt.Println(text)
 	fmt.Println("━━━━━━━━━━━━━━")
@@ -67,9 +61,9 @@ func main() {
 
 	if text != "" {
 		clipboard.WriteAll(text)
-		fmt.Println("📋 Copied to clipboard!")
+		fmt.Println(" Copied to clipboard!")
 	} else {
-		fmt.Println("⚠️  No text detected")
+		fmt.Println("  No text detected")
 	}
 
 	os.Remove(tempPath)
@@ -109,6 +103,6 @@ func captureWindows(path string) error {
 		return err
 	}
 
-	fmt.Println("⚠️  Windows: Full screen captured (selection not supported yet)")
+	fmt.Println(" Windows: Full screen captured (selection not supported yet)")
 	return nil
 }
