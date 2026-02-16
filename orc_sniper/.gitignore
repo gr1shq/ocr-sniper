@@ -1,0 +1,14 @@
+# Go binaries
+ocr-sniper
+ocr-sniper-linux
+ocr-sniper-mac
+ocr-sniper-windows.exe
+*.exe
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
